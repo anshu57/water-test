@@ -10,11 +10,11 @@ def load_data(filepath : str) -> pd.DataFrame:
 #train_data = pd.read_csv(os.path.join("data", "raw", "train.csv"))
 #test_data = pd.read_csv(os.path.join("data", "raw", "test.csv"))
 
-def fill_missing_with_median(df: pd.DataFrame) -> pd.DataFrame:
+def fill_missing_with_mean(df: pd.DataFrame) -> pd.DataFrame:
     try:
         for col in df.columns:
-            median = df[col].median()
-            df.fillna({col:median}, inplace=True)
+            mean = df[col].mean()
+            df.fillna({col:mean}, inplace=True)
         return df
     except Exception as e:
         raise Exception("Errror filling missing values: {e}")
@@ -37,14 +37,14 @@ def main():
         train_data = load_data(os.path.join(raw_data_path, "train.csv"))
         test_data = load_data(os.path.join(raw_data_path, "test.csv"))
 
-        train_processed_data = fill_missing_with_median(train_data)
-        test_processed_data = fill_missing_with_median(test_data)
+        train_processed_data = fill_missing_with_mean(train_data)
+        test_processed_data = fill_missing_with_mean(test_data)
 
     #data_path = os.path.join("data", "processed")
         os.makedirs(processed_data_path)
 
-        save_data(train_processed_data, os.path.join(processed_data_path, "train_processed.csv"))
-        save_data(test_processed_data, os.path.join(processed_data_path, "test_processed.csv"))          
+        save_data(train_processed_data, os.path.join(processed_data_path, "train_processed_mean.csv"))
+        save_data(test_processed_data, os.path.join(processed_data_path, "test_processed_mean.csv"))          
     except Exception as e:
         raise Exception(f"An error occured {e}")
     
