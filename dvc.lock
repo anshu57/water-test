@@ -9,11 +9,11 @@ stages:
       size: 2055
     params:
       params.yaml:
-        data_collection.test_size: 0.3
+        data_collection.test_size: 0.2
     outs:
     - path: data/raw
       hash: md5
-      md5: 43f22e8600c04238d0a8156861cff355.dir
+      md5: f508f5f2cfb3fcc116235f0993dd2e00.dir
       size: 520443
       nfiles: 2
   pre_processing:
@@ -21,7 +21,7 @@ stages:
     deps:
     - path: data/raw
       hash: md5
-      md5: 43f22e8600c04238d0a8156861cff355.dir
+      md5: f508f5f2cfb3fcc116235f0993dd2e00.dir
       size: 520443
       nfiles: 2
     - path: src/data/data_prep.py
@@ -31,16 +31,16 @@ stages:
     outs:
     - path: data/processed
       hash: md5
-      md5: 1311f1d33abebd3154f23ea213f90a2c.dir
-      size: 544772
+      md5: d44c7c5ff5f7c11a1f4df58d51649981.dir
+      size: 544694
       nfiles: 2
   model_building:
     cmd: python src/model/model_building.py
     deps:
     - path: data/processed
       hash: md5
-      md5: 1311f1d33abebd3154f23ea213f90a2c.dir
-      size: 544772
+      md5: d44c7c5ff5f7c11a1f4df58d51649981.dir
+      size: 544694
       nfiles: 2
     - path: src/model/model_building.py
       hash: md5
@@ -48,19 +48,19 @@ stages:
       size: 2477
     params:
       params.yaml:
-        model_building.n_estimators: 1000
+        model_building.n_estimators: 100
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: b80c7b8c80d645079012428862e59fa2
-      size: 65055118
+      md5: 457bc12b0e0be71016252996a9142cd9
+      size: 7379381
   model_eval:
     cmd: python src/model/model_eval.py
     deps:
     - path: models/model.pkl
       hash: md5
-      md5: b80c7b8c80d645079012428862e59fa2
-      size: 65055118
+      md5: 457bc12b0e0be71016252996a9142cd9
+      size: 7379381
     - path: src/model/model_eval.py
       hash: md5
       md5: 23c707a552e58b9951d4cb5c60046268
@@ -68,5 +68,5 @@ stages:
     outs:
     - path: reports/metrics.json
       hash: md5
-      md5: ee4336dc013aff215f5c2fb8019a0fe5
-      size: 128
+      md5: ed405ff7cb8a730e212acb8efdac8097
+      size: 141
